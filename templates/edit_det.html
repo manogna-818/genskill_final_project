@@ -1,0 +1,83 @@
+
+{% block body %}
+<style>
+   .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);   
+}
+   .styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+    .styled-table th,
+    .styled-table td {
+    padding: 12px 15px;
+}
+    .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+</style>
+<h1>NOTE</h1>
+<p>
+  <table class="styled-table"> 
+    <thead> 
+    <tr> 
+        <th>ID</th> 
+        <th>Name</th>
+        <th>Description</th>
+    </tr> 
+    </thead> 
+    <tbody> 
+        {% for row in get %}  
+            <tr class="active-row"> 
+                <td>{{row[0]}}</td> 
+                <td>{{row[1]}}</td> 
+                <td>{{row[3]}}</td>
+            </tr> 
+        {% endfor %} 
+    </tbody> 
+</table> 
+ {% for row in get %} 
+ <form action="{{url_for('edit_details',notenum=row[0])}}" method="POST">
+ 
+  <div class="mb-3">
+    <label for = "description" class="form-label">Description</label><br/>
+    <textarea rows="10" id="description" class="form-control"
+              name="description">
+      {{row[3]}}
+    </textarea>
+  </div>
+  <div class="mb-3">
+    <label for = "title" class="form-label">Name</label><br/>
+    <textarea rows="10" id="name" class="form-control"
+              name="name">
+      {{row[1]}}
+    </textarea>
+  </div>
+
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+
+</form>
+ {% endfor %} 
+</p>
+
+{% endblock %}
